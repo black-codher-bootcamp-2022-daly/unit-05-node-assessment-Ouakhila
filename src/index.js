@@ -7,6 +7,12 @@ const port = 8080;
 const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
 const todoFilePath = process.env.BASE_JSON_PATH;
+// fs.writeFile(__dirname + process.env.BASE_JSON_PATH,  content, err => {
+//   if (err) {
+//     console.error(err)
+//     return
+//   }
+// })
 
 //Read todos from todos.json into variable
 let todos = require(__dirname + todoFilePath);
@@ -19,33 +25,33 @@ app.use(bodyParser.json());
 app.use("/content", express.static(path.join(__dirname, "public")));
 
 app.get("/", (_, res) => {
-  /*
+  
   res.sendFile("./public/index.html", { root: __dirname });
-  */
-  res.status(501).end();
+  
+  // res.status(501).end();
 });
 
 app.get('/todos', (_, res) => {
-  /*
-  res.header("Content-Type","application/json");
-  res.sendFile(todoFilePath, { root: __dirname });
-  */
-  res.status(501).end();
+
+  // res.header("Content-Type","application/json");
+  // res.sendFile(todoFilePath, { root: __dirname });
+ 
+  // res.status(501).end();
 });
 
-//Add GET request with path '/todos/overdue'
+// Add GET request with path '/todos/overdue'
 
-//Add GET request with path '/todos/completed'
+// Add GET request with path '/todos/completed'
 
-//Add POST request with path '/todos'
+// Add POST request with path '/todos'
 
-//Add PATCH request with path '/todos/:id
+// Add PATCH request with path '/todos/:id
 
-//Add POST request with path '/todos/:id/complete
+// Add POST request with path '/todos/:id/complete
 
-//Add POST request with path '/todos/:id/undo
+// Add POST request with path '/todos/:id/undo
 
-//Add DELETE request with path '/todos/:id
+// Add DELETE request with path '/todos/:id
 
 app.listen(port, function () {
     console.log(`Node server is running... http://localhost:${port}`);
