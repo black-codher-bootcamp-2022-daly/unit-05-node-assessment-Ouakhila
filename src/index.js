@@ -86,16 +86,16 @@ app.post("/", (request, response) => {
 });
 
 //Add PATCH request with path '/todos/:id
-app.put("/todos/:id", (request, response) => {
-  var id = request.params.id;
-  if (todos[id]) {
-    var updatedTodo = JSON.parse(request.body);
-    todos[id] = updatedTodo;
-    response.status(204).send();
-  } else {
-    response.status(404, "The task is not found").send();
-  }
-});
+// app.put("/todos/:id", (request, response) => {
+//   var id = request.params.id;
+//   if (todos[id]) {
+//     var updatedTodo = JSON.parse(request.body);
+//     todos[id] = updatedTodo;
+//     response.status(204).send();
+//   } else {
+//     response.status(404, "The task is not found").send();
+//   }
+// });
 
 //Add POST request with path '/todos/:id/complete
 
