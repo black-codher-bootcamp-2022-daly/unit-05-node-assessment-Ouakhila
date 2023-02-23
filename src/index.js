@@ -41,17 +41,16 @@ app.get("/todos", (req, res) => {
 
 //Add GET request with path '/todos/overdue'
 
-app.get("/todos/dates", (req, res) => {
+app.get("/todos/overdue", (req, res) => {
   //   /*
   //   res.header("Content-Type","application/json");
   //   res.sendFile(todoFilePath, { root: __dirname });
   //   */
 
   // console.log(req.params["completed"]);
-  if (req.params.due < currentDate) {
+  if (req.body.due < currentDate) {
     res.header("Content-Type", "application/json");
-    res.sendFile(path.join(__dirname, "/todos.json/overdue"));
-  } else {
+    res.sendFile(path.join(__dirname, "/models/todos.json/overdue"));
   }
 
   //   // res.status(501).end();
@@ -65,11 +64,9 @@ app.get("/todos/completed", (req, res) => {
   //   res.sendFile(todoFilePath, { root: __dirname });
 
   //   */
-  if ((req.params.completed = true)) {
-    res.header("Content-Type", "application/json");
-    res.sendFile(path.join(__dirname, "/todos/completed"));
-  } else {
-  }
+
+  res.header("Content-Type", "application/json");
+  res.sendFile(path.join(__dirname, "/models/todos.json/completed"));
 
   //   // res.status(501).end();
   //   // res.status(501).end();
@@ -77,13 +74,15 @@ app.get("/todos/completed", (req, res) => {
 
 //Add POST request with path '/todos'
 
-app.post("/", (request, response) => {
-  var newTodo = JSON.parse(request.body);
-  count = count + 1;
-  newTodo.id = count;
-  todos.push(newTodo);
-  response.status(201).json();
-});
+// app.post("/", (request, response) => {
+//   var newTodo = JSON.parse(request.body);
+//   count = count + 1;
+//   newTodo.id = count;
+
+//newTodo.id = todos.length +1;
+//   todos.push(newTodo);
+//   response.status(201).json(newTodo);
+// });
 
 //Add PATCH request with path '/todos/:id
 // app.put("/todos/:id", (request, response) => {
@@ -102,8 +101,8 @@ app.post("/", (request, response) => {
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
-app.delete("/todos/:id", (request, response) => {
-  var id = parseInt(request.params.id);
+app.delete("/todos/:id", (req, resp) => {
+  var id = parseInt(req.params.id);
   if (todos.filter((todo) => todo.id == id).length !== 0) {
     todos = todos.filter((todo) => todo.id !== id);
     response.status(200).send();
