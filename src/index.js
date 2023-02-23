@@ -5,6 +5,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
+const date = new Date();
 const todoFilePath = process.env.BASE_JSON_PATH;
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,18 +19,41 @@ app.get("/", (_, res) => {
   /*
   res.sendFile("./public/index.html", { root: __dirname });
   */
-  res.status(501).end();
+  res.sendFile("./public/index.html", { root: __dirname });
+  // res.status(501).end();
 });
 
-app.get("/todos", (_, res) => {
+app.get("/todos", (req, res) => {
   /*
   res.header("Content-Type","application/json");
   res.sendFile(todoFilePath, { root: __dirname });
   */
-  res.status(501).end();
+
+  res.header("Content-Type", "application/json");
+
+  if (req.params.due > date) {
+    res.sendFile(path.join(__dirname, "/models/todos.json"));
+  }
+
+  // res.status(501).end();
+
+  // res.status(501).end();
 });
 
 //Add GET request with path '/todos/overdue'
+
+// app.get("/todos", (_, res) => {
+//   /*
+//   res.header("Content-Type","application/json");
+//   res.sendFile(todoFilePath, { root: __dirname });
+//   */
+
+//   res.header("Content-Type", "application/json");
+//   res.sendFile(path.join(__dirname, "/models/todos.json"));
+//   // res.status(501).end();
+
+//   // res.status(501).end();
+// });
 
 //Add GET request with path '/todos/completed'
 
