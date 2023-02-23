@@ -31,7 +31,7 @@ app.get("/todos", (req, res) => {
 
   res.header("Content-Type", "application/json");
 
-  if (req.params.due > date) {
+  {
     res.sendFile(path.join(__dirname, "/models/todos.json"));
   }
 
