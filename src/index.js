@@ -119,15 +119,15 @@ app.get("/todos/completed", (req, res) => {
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
-app.delete("/todos/:id", (req, resp) => {
-  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
-  var id = parseInt(req.params.id);
-  if (todosData.filter((todo) => todo.id == id).length !== 0) {
-    todosData = todosData.filter((todo) => todo.id !== id);
-    resp.status(200).send();
-  } else {
-    resp.status(404).send();
-  }
-});
+// app.delete("/todos/:id", (req, resp) => {
+//   const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
+//   var id = parseInt(req.params.id);
+//   if (todosData.filter((todo) => todo.id == id).length !== 0) {
+//     todosData = todosData.filter((todo) => todo.id !== id);
+//     resp.status(200).send();
+//   } else {
+//     resp.status(404).send();
+//   }
+// });
 
 module.exports = app;
