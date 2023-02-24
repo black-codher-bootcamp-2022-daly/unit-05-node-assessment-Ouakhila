@@ -28,34 +28,34 @@ app.get("/todos", (_, res) => {
   // res.status(501).end();
 });
 
+/// GET todos/:id
+
 //Add GET request with path '/todos/overdue'
 
-app.get("/todos/overdue", (_, res) => {
+app.get("/todos/overdue", (req, res) => {
   let overdueArray = [];
-  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   console.log(todosData);
   todosData.forEach(checkingDates);
 
   function checkingDates(overduedates) {
-    if (new Date(overduedates.due) < currentDate) {
+    if (
+      new Date(overduedates.due) < currentDate &&
+      overduedates.completed === false
+    ) {
       return overdueArray.push(overduedates);
     } else {
       return overdueArray;
     }
   }
-
-  // });
   console.log(overdueArray);
   res.header("Content-Type", "application/json");
-  // res.sendFile(__dirname, todoFilePath);
-  res.send(JSON.stringify(overdueArray));
+
+  res.send(JSON.stringify(overdueArray, null, 2));
 
   // res.header("Content-Type", "application/json");
-
   //   fs.readFileSync(path.join(__dirname, "/models/todos.json/overdue"))
-
-  //   // res.status(501).end();
   //   // res.status(501).end();
 });
 
@@ -64,7 +64,7 @@ app.get("/todos/overdue", (_, res) => {
 //Add GET request with path '/todos/completed'
 
 app.get("/todos/completed", (req, res) => {
-  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   console.log(todosData);
 
@@ -80,13 +80,12 @@ app.get("/todos/completed", (req, res) => {
   res.header("Content-Type", "application/json");
   // res.sendFile(todoFilePath, { root: __dirname });
   console.log(list);
-  res.send(JSON.stringify(list));
+  res.send(JSON.stringify(list, null, 2));
 
   // res.header("Content-Type", "application/json");
 
   // fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"));
 
-  //   // res.status(501).end();
   //   // res.status(501).end();
 });
 
