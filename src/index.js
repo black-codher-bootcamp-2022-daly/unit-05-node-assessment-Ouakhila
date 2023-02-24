@@ -104,9 +104,10 @@ app.get("/todos/:id", (req, res) => {
 //Add POST request with path '/todos'
 app.post("/todos", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-  const { name, due } = req.body;
+  var name,
+    due = req.body;
 
-  if (new Date(due) < currentDate) {
+  if (currentDate.due <= currentDate) {
     todosData.push({
       id: uuidv4(),
       name,
