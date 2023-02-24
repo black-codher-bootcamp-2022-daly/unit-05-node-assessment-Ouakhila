@@ -2,6 +2,7 @@ require("dotenv").config();
 const fs = require("fs");
 const express = require("express");
 const app = express();
+
 const path = require("path");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
@@ -24,17 +25,8 @@ app.get("/", (_, res) => {
 });
 
 app.get("/todos", (req, res) => {
-  /*
-  res.header("Content-Type","application/json");
-  res.sendFile(todoFilePath, { root: __dirname });
-  */
   res.header("Content-Type", "application/json");
-
-  {
-    res.sendFile(path.join(__dirname, "/models/todos.json"));
-  }
-
-  // res.status(501).end();
+  res.sendFile(todoFilePath, { root: __dirname });
 
   // res.status(501).end();
 });
@@ -42,16 +34,15 @@ app.get("/todos", (req, res) => {
 //Add GET request with path '/todos/overdue'
 
 app.get("/todos/overdue", (req, res) => {
-  //   /*
-  //   res.header("Content-Type","application/json");
-  //   res.sendFile(todoFilePath, { root: __dirname });
-  //   */
+  res.header("Content-Type", "application/json");
+  res.sendFile(todoFilePath, { root: __dirname });
 
   // console.log(req.params["completed"]);
-  if (req.body.due < currentDate) {
-    res.header("Content-Type", "application/json");
-    res.sendFile(path.join(__dirname, "/models/todos.json/overdue"));
-  }
+
+  // res.header("Content-Type", "application/json");
+  // res.sendFile(
+  //   fs.readFileSync(path.join(__dirname, "/models/todos.json/overdue"))
+  // );
 
   //   // res.status(501).end();
   //   // res.status(501).end();
@@ -66,7 +57,9 @@ app.get("/todos/completed", (req, res) => {
   //   */
 
   res.header("Content-Type", "application/json");
-  res.sendFile(path.join(__dirname, "/models/todos.json/completed"));
+  res.sendFile(
+    fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"))
+  );
 
   //   // res.status(501).end();
   //   // res.status(501).end();
