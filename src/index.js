@@ -38,10 +38,7 @@ app.get("/todos/overdue", (_, res) => {
   todosData.forEach(checkingDates);
 
   function checkingDates(overduedates) {
-    if (
-      new Date(overduedates.due) < currentDate &&
-      overduedates.completed === false
-    ) {
+    if (new Date(overduedates.due) < currentDate) {
       return overdueArray.push(overduedates);
     } else {
       return overdueArray;
@@ -62,7 +59,10 @@ app.get("/todos/overdue", (_, res) => {
   //   // res.status(501).end();
 });
 
+//GET  /todos/:id
+
 //Add GET request with path '/todos/completed'
+
 app.get("/todos/completed", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
 
@@ -120,12 +120,13 @@ app.get("/todos/completed", (req, res) => {
 
 //Add DELETE request with path '/todos/:id
 app.delete("/todos/:id", (req, resp) => {
+  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
   var id = parseInt(req.params.id);
-  if (todos.filter((todo) => todo.id == id).length !== 0) {
-    todos = todos.filter((todo) => todo.id !== id);
-    response.status(200).send();
+  if (todosData.filter((todo) => todo.id == id).length !== 0) {
+    todosData = todosData.filter((todo) => todo.id !== id);
+    resp.status(200).send();
   } else {
-    response.status(404).send();
+    resp.status(404).send();
   }
 });
 
