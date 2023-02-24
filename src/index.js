@@ -102,16 +102,35 @@ app.get("/todos/:id", (req, res) => {
 });
 
 //Add POST request with path '/todos'
+app.post("/todos", (req, res) => {
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const { name, due } = req.body;
 
-// app.post("/", (request, response) => {
-//   var newTodo = JSON.parse(request.body);
-//   count = count + 1;
-//   newTodo.id = count;
-
-//newTodo.id = todos.length +1;
-//   todos.push(newTodo);
-//   response.status(201).json(newTodo);
-// });
+  if(new Date(due) = 'Invalid Date') {
+     const message = " date is invalid"
+     res.status(400).send(message).end();
+  } else {
+    todosData.push({
+      id: uuidv4(),
+      name,
+      created: currentDate,
+      due,
+      completed: false,
+    });
+  
+    todosData = JSON.stringify(todosData, null, 2);
+    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+      if (err) {
+        const message = "Unable to post ";
+        res.send(message);
+      } else {
+        const message = "It is done"
+        res.status(201). send(message).end();
+      }
+    });
+  }
+ 
+});
 
 //Add PATCH request with path '/todos/:id
 // app.put("/todos/:id", (request, response) => {
