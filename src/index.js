@@ -107,9 +107,6 @@ app.post("/todos", (req, res) => {
   const { name, due } = req.body;
 
   if (new Date(due) < currentDate) {
-    const message = " date is invalid";
-    res.status(400).send(message).end();
-  } else {
     todosData.push({
       id: uuidv4(),
       name,
@@ -128,6 +125,9 @@ app.post("/todos", (req, res) => {
         res.status(201).send(message).end();
       }
     });
+  } else {
+    const message = " date is invalid";
+    res.status(400).send(message).end();
   }
 });
 
