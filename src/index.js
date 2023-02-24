@@ -30,22 +30,6 @@ app.get("/todos", (_, res) => {
 
 /// GET todos/:id
 
-app.get("/todos/:id", (req, res) => {
-  const todosId = req.params.id;
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-  if (todosData.find((element) => element.id == todosId)) {
-    res.send(
-      JSON.stringify(
-        todosData.find((element) => element.id == todosId),
-        null,
-        2
-      )
-    );
-  } else {
-    res.status(404).end();
-  }
-});
-
 //Add GET request with path '/todos/overdue'
 
 app.get("/todos/overdue", (req, res) => {
@@ -99,6 +83,22 @@ app.get("/todos/completed", (req, res) => {
   // fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"));
 
   //   // res.status(501).end();
+});
+
+app.get("/todos/:id", (req, res) => {
+  const todosId = req.params.id;
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  if (todosData.find((element) => element.id == todosId)) {
+    res.send(
+      JSON.stringify(
+        todosData.find((element) => element.id == todosId),
+        null,
+        2
+      )
+    );
+  } else {
+    res.status(404).end();
+  }
 });
 
 //Add POST request with path '/todos'
