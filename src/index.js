@@ -21,7 +21,7 @@ app.get("/", (_, res) => {
   // res.status(501).end();
 });
 
-app.get("/todos", (req, res) => {
+app.get("/todos", (_, res) => {
   res.header("Content-Type", "application/json");
   res.sendFile(todoFilePath, { root: __dirname });
 
@@ -35,7 +35,7 @@ app.get("/todos/overdue", (_, res) => {
   const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
 
   console.log(todosData);
-  todosData.filter(checkingDates);
+  todosData.forEach(checkingDates);
 
   function checkingDates(overduedates) {
     if (
