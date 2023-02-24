@@ -6,7 +6,7 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
-const currentDate = new Date().getFullYear();
+const currentDate = new Date();
 const todoFilePath = process.env.BASE_JSON_PATH;
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,16 +33,31 @@ app.get("/todos", (req, res) => {
 
 //Add GET request with path '/todos/overdue'
 
-app.get("/todos/overdue", (req, res) => {
-  res.header("Content-Type", "application/json");
-  res.sendFile(todoFilePath, { root: __dirname });
+app.get("/todos/overdue", (_, res) => {
+  let overdueArray = [];
+  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
 
-  // console.log(req.params["completed"]);
+  console.log(todosData);
+  todosData.filter(checkingDates);
+
+  function checkingDates(overduedates) {
+    if (
+      new Date(overduedates.due) < currentDate &&
+      overduedates.completed === false
+    ) {
+      overdueArray.push(overduedates);
+    }
+  }
+
+  // });
+  console.log(overdueArray);
+  res.header("Content-Type", "application/json");
+  // res.sendFile(__dirname, todoFilePath);
+  res.send(JSON.stringify(overdueArray));
 
   // res.header("Content-Type", "application/json");
-  // res.sendFile(
+
   //   fs.readFileSync(path.join(__dirname, "/models/todos.json/overdue"))
-  // );
 
   //   // res.status(501).end();
   //   // res.status(501).end();
@@ -57,9 +72,8 @@ app.get("/todos/completed", (req, res) => {
   //   */
 
   res.header("Content-Type", "application/json");
-  res.sendFile(
-    fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"))
-  );
+
+  fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"));
 
   //   // res.status(501).end();
   //   // res.status(501).end();
