@@ -106,7 +106,7 @@ app.post("/todos", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const { name, due } = req.body;
 
-  if (new Date(due) < currentDate) {
+  if (req.body && new Date(due) < currentDate) {
     todosData.push({
       id: uuidv4(),
       name,
@@ -121,7 +121,7 @@ app.post("/todos", (req, res) => {
         const message = "Unable to post ";
         res.send(message);
       } else {
-        const message = "It is done";
+        const message = "create";
         res.status(201).send(message).end();
       }
     });
