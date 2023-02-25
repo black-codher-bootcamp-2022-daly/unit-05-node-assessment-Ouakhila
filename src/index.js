@@ -108,42 +108,42 @@ app.post("/todos", (req, res) => {
   let name = req.body.name;
   let due = req.body.due;
 
-  // try {
-  if (req.body && Date(due) != currentDate) {
-    console.log("great");
-    todosData.push({
-      id: uuidv4(),
-      name,
-      created: currentDate,
-      due,
-      completed: false,
-    });
-    console.log(todosData);
-    // res.header("Content-Type", "application/json");
-    todosData = JSON.stringify(todosData, null, 2);
-    console.log(todosData);
-    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
-      if (err) {
-        const message = "Unable to post ";
-        res.send(message);
-      } else {
-        const message = "create";
-        res.status(201).send(message).end();
-      }
-    });
+  try {
+    if (req.body && Date(due) != currentDate) {
+      console.log("great");
+      todosData.push({
+        id: uuidv4(),
+        name: "Turn on central heating",
+        created: currentDate,
+        due: "2023-11-20T18:25:43.511Z",
+        completed: false,
+      });
+      console.log(todosData);
+      // res.header("Content-Type", "application/json");
+      todosData = JSON.stringify(todosData, null, 2);
+      console.log(todosData);
+      fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+        if (err) {
+          const message = "Unable to post ";
+          res.send(message);
+        } else {
+          const message = "create";
+          res.status(201).send(message).end();
+        }
+      });
+    }
+  } catch (error) {
+    const message = "invalid";
+    res.status(400).send(message).end();
   }
-  // } catch (error) {
-  //   const message = "invalid";
-  //   res.status(400).send(message).end();
-  // }
 });
 
 //Add PATCH request with path '/todos/:id
 
 app.patch("/todos/:id", (req, res) => {
   var id = req.params.id;
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-  const body = req.body;
+  let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  let body = req.body;
   todosData.find((todo) => todo.id === id);
   if (!todosData[id]) {
     res.status(404, "The task is not found").send();
