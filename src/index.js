@@ -34,7 +34,9 @@ app.get("/todos", (_, res) => {
 
 app.get("/todos/overdue", (req, res) => {
   let overdueArray = [];
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const todosData = JSON.parse(
+    fs.readFileSync({ root: __dirname }, todoFilePath)
+  );
 
   console.log(todosData);
   todosData.forEach(checkingDates);
@@ -62,7 +64,9 @@ app.get("/todos/overdue", (req, res) => {
 //Add GET request with path '/todos/completed'
 
 app.get("/todos/completed", (req, res) => {
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const todosData = JSON.parse(
+    fs.readFileSync({ root: __dirname }, todoFilePath)
+  );
 
   console.log(todosData);
 
@@ -87,7 +91,9 @@ app.get("/todos/completed", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todosId = req.params.id;
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const todosData = JSON.parse(
+    fs.readFileSync({ root: __dirname }, todoFilePath)
+  );
   if (todosData.find((element) => element.id == todosId)) {
     res.send(
       JSON.stringify(
@@ -103,11 +109,13 @@ app.get("/todos/:id", (req, res) => {
 
 //Add POST request with path '/todos'
 app.post("/todos", (req, res) => {
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-  var name = req.body;
+  const todosData = JSON.parse(
+    fs.readFileSync({ root: __dirname }, todoFilePath)
+  );
+
   var due = req.body;
 
-  if (currentDate.due > currentDate) {
+  if (currentDate.due < currentDate) {
     todosData.push({
       id: uuidv4(),
       name: "Turn on central heating",
@@ -117,7 +125,7 @@ app.post("/todos", (req, res) => {
     });
 
     todosData = JSON.stringify(todosData, null, 2);
-    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+    fs.writeFile({ root: __dirname }, todoFilePath, todosData, (err) => {
       if (err) {
         const message = "Unable to post ";
         res.send(message);
@@ -149,15 +157,15 @@ app.post("/todos", (req, res) => {
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
-// app.delete("/todos/:id", (req, resp) => {
-//   const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
-//   var id = parseInt(req.params.id);
-//   if (todosData.filter((todo) => todo.id == id).length !== 0) {
-//     todosData = todosData.filter((todo) => todo.id !== id);
-//     resp.status(200).send();
-//   } else {
-//     resp.status(404).send();
-//   }
-// });
+app.delete("/todos/:id", (req, resp) => {
+  const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
+  var id = parseInt(req.params.id);
+  if (todosData.filter((todo) => todo.id == id).length !== 0) {
+    todosData = todosData.filter((todo) => todo.id !== id);
+    resp.status(200).send();
+  } else {
+    resp.status(404).send();
+  }
+});
 
 module.exports = app;
