@@ -109,10 +109,10 @@ app.post("/todos", (req, res) => {
   const due = req.body;
   const body = req.body;
 
-  if (typeof body === "object" && currentDate.due < currentDate) {
+  if (body && Date(due) > currentDate) {
     todosData.push({
       id: uuidv4(),
-      name: "Turn on central heating",
+      name,
       created: currentDate,
       due,
       completed: false,
@@ -136,16 +136,20 @@ app.post("/todos", (req, res) => {
 
 //Add PATCH request with path '/todos/:id
 
-// app.put("/todos/:id", (request, response) => {
-//   var id = request.params.id;
-//   if (todos[id]) {
-//     var updatedTodo = JSON.parse(request.body);
-//     todos[id] = updatedTodo;
-//     response.status(204).send();
-//   } else {
-//     response.status(404, "The task is not found").send();
-//   }
-// });
+app.patch("/todos/:id", (req, res) => {
+  var id = req.params.id;
+
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const body = req.body;
+  if (todosData[id]) {
+    var updatedTodo = JSON.parse(body);
+    todosData[id] = updatedTodo;
+    res.status(204).send();
+    res.send(JSON.stringify(updatedTodo, null, 2));
+  } else {
+    res.status(404, "The task is not found").send();
+  }
+});
 
 //Add POST request with path '/todos/:id/complete
 // app.post("/todos/:id", (req, res) => {
