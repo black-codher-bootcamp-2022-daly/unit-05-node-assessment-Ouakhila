@@ -144,7 +144,7 @@ app.patch("/todos/:id", (req, res) => {
   if (!todosData[id]) {
     res.status(404, "The task is not found").send();
   } else {
-    todo.completed = !todo.completed;
+    todo.completed == false;
     res.json(todo);
     // if (todosData[id]) {
     //   var updatedTodo = JSON.parse(body);
