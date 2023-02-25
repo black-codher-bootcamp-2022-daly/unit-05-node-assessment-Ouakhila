@@ -105,31 +105,34 @@ app.get("/todos/:id", (req, res) => {
 app.post("/todos", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
-  var name = req.body;
-  var due = req.body;
-  var body = req.body;
+  let name = req.body.name;
+  let due = req.body.due;
 
   try {
-    todosData.push({
-      id: uuidv4(),
-      name,
-      created: currentDate,
-      due,
-      completed: false,
-    });
-
-    todosData = JSON.stringify(todosData, null, 2);
-    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
-      if (err) {
-        const message = "Unable to post ";
-        res.send(message);
-      } else {
-        const message = "create";
-        res.status(201).send(message).end();
-      }
-    });
+    if (req.body && Date(due) != currentDate) {
+      console.log("great");
+      todosData.push({
+        id: uuidv4(),
+        name,
+        created: currentDate,
+        due,
+        completed: false,
+      });
+      console.log(todosData);
+      res.header("Content-Type", "application/json");
+      todosData = JSON.stringify(todosData, null, 2);
+      fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+        if (err) {
+          const message = "Unable to post ";
+          res.send(message);
+        } else {
+          const message = "create";
+          res.status(201).send(message).end();
+        }
+      });
+    }
   } catch (error) {
-    const message = " date is invalid";
+    const message = "invalid";
     res.status(400).send(message).end();
   }
 });
@@ -144,7 +147,7 @@ app.patch("/todos/:id", (req, res) => {
   if (!todosData[id]) {
     res.status(404, "The task is not found").send();
   } else {
-    todo.completed == false;
+    todo.completed = !todo.completed;
     res.json(todo);
     // if (todosData[id]) {
     //   var updatedTodo = JSON.parse(body);
