@@ -105,11 +105,11 @@ app.get("/todos/:id", (req, res) => {
 app.post("/todos", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
-  const name = req.body;
-  const due = req.body;
-  const body = req.body;
+  var name = req.body;
+  var due = req.body;
+  var body = req.body;
 
-  if (body && Date(due) > currentDate) {
+  try {
     todosData.push({
       id: uuidv4(),
       name,
@@ -128,7 +128,7 @@ app.post("/todos", (req, res) => {
         res.status(201).send(message).end();
       }
     });
-  } else {
+  } catch (error) {
     const message = " date is invalid";
     res.status(400).send(message).end();
   }
@@ -138,16 +138,20 @@ app.post("/todos", (req, res) => {
 
 app.patch("/todos/:id", (req, res) => {
   var id = req.params.id;
-
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const body = req.body;
-  if (todosData[id]) {
-    var updatedTodo = JSON.parse(body);
-    todosData[id] = updatedTodo;
-    res.status(204).send();
-    res.send(JSON.stringify(updatedTodo, null, 2));
-  } else {
+  todosData.find((todo) => todo.id === id);
+  if (!todosData[id]) {
     res.status(404, "The task is not found").send();
+  } else {
+    todo.completed = !todo.completed;
+    res.json(todo);
+    // if (todosData[id]) {
+    //   var updatedTodo = JSON.parse(body);
+    //   todosData[id].checked = !updatedTodo[i].checked;
+    //   res.writeFile(JSON.stringify(todosData, null, 2));
+    //   res.status(204).send();
+    // } else {
   }
 });
 
