@@ -105,9 +105,11 @@ app.get("/todos/:id", (req, res) => {
 app.post("/todos", (req, res) => {
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
-  var due = req.body;
+  const name = req.body;
+  const due = req.body;
+  const body = req.body;
 
-  if (currentDate.due < currentDate) {
+  if (typeof body === "object" && currentDate.due < currentDate) {
     todosData.push({
       id: uuidv4(),
       name: "Turn on central heating",
@@ -133,6 +135,7 @@ app.post("/todos", (req, res) => {
 });
 
 //Add PATCH request with path '/todos/:id
+
 // app.put("/todos/:id", (request, response) => {
 //   var id = request.params.id;
 //   if (todos[id]) {
@@ -145,7 +148,12 @@ app.post("/todos", (req, res) => {
 // });
 
 //Add POST request with path '/todos/:id/complete
-
+// app.post("/todos/:id", (req, res) => {
+//   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+//   const index = todosData.findIndex((el) => el.id === id);
+//   // var name = req.body;
+//   // var due = req.body;
+// });
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
