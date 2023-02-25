@@ -103,38 +103,39 @@ app.get("/todos/:id", (req, res) => {
 
 //Add POST request with path '/todos'
 app.post("/todos", (req, res) => {
-  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   let name = req.body.name;
   let due = req.body.due;
 
-  try {
-    if (req.body && Date(due) != currentDate) {
-      console.log("great");
-      todosData.push({
-        id: uuidv4(),
-        name,
-        created: currentDate,
-        due,
-        completed: false,
-      });
-      console.log(todosData);
-      res.header("Content-Type", "application/json");
-      todosData = JSON.stringify(todosData, null, 2);
-      fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
-        if (err) {
-          const message = "Unable to post ";
-          res.send(message);
-        } else {
-          const message = "create";
-          res.status(201).send(message).end();
-        }
-      });
-    }
-  } catch (error) {
-    const message = "invalid";
-    res.status(400).send(message).end();
+  // try {
+  if (req.body && Date(due) != currentDate) {
+    console.log("great");
+    todosData.push({
+      id: uuidv4(),
+      name,
+      created: currentDate,
+      due,
+      completed: false,
+    });
+    console.log(todosData);
+    // res.header("Content-Type", "application/json");
+    todosData = JSON.stringify(todosData, null, 2);
+    console.log(todosData);
+    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+      if (err) {
+        const message = "Unable to post ";
+        res.send(message);
+      } else {
+        const message = "create";
+        res.status(201).send(message).end();
+      }
+    });
   }
+  // } catch (error) {
+  //   const message = "invalid";
+  //   res.status(400).send(message).end();
+  // }
 });
 
 //Add PATCH request with path '/todos/:id
@@ -159,12 +160,13 @@ app.patch("/todos/:id", (req, res) => {
 });
 
 //Add POST request with path '/todos/:id/complete
-// app.post("/todos/:id", (req, res) => {
-//   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-//   const index = todosData.findIndex((el) => el.id === id);
-//   // var name = req.body;
-//   // var due = req.body;
-// });
+app.post("/todos/:id", (req, res) => {
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const index = todosData.findIndex((el) => el.id === id);
+
+  // var name = req.body;
+  // var due = req.body;
+});
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
