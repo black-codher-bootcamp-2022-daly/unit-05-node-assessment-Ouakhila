@@ -34,9 +34,7 @@ app.get("/todos", (_, res) => {
 
 app.get("/todos/overdue", (req, res) => {
   let overdueArray = [];
-  const todosData = JSON.parse(
-    fs.readFileSync({ root: __dirname } + todoFilePath)
-  );
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   console.log(todosData);
   todosData.forEach(checkingDates);
@@ -64,9 +62,7 @@ app.get("/todos/overdue", (req, res) => {
 //Add GET request with path '/todos/completed'
 
 app.get("/todos/completed", (req, res) => {
-  const todosData = JSON.parse(
-    fs.readFileSync({ root: __dirname } + todoFilePath)
-  );
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   console.log(todosData);
 
@@ -91,9 +87,7 @@ app.get("/todos/completed", (req, res) => {
 
 app.get("/todos/:id", (req, res) => {
   const todosId = req.params.id;
-  const todosData = JSON.parse(
-    fs.readFileSync({ root: __dirname } + todoFilePath)
-  );
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   if (todosData.find((element) => element.id == todosId)) {
     res.send(
       JSON.stringify(
@@ -109,9 +103,7 @@ app.get("/todos/:id", (req, res) => {
 
 //Add POST request with path '/todos'
 app.post("/todos", (req, res) => {
-  const todosData = JSON.parse(
-    fs.readFileSync({ root: __dirname } + todoFilePath)
-  );
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   var due = req.body;
 
@@ -125,7 +117,7 @@ app.post("/todos", (req, res) => {
     });
 
     todosData = JSON.stringify(todosData, null, 2);
-    fs.writeFile({ root: __dirname } + todoFilePath, todosData, (err) => {
+    fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
       if (err) {
         const message = "Unable to post ";
         res.send(message);
