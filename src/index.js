@@ -162,25 +162,26 @@ app.patch("/todos/:id", (req, res) => {
 
     const message = " done";
     res.status(200).send(message).end();
-  } else {
-    const message = "id not found";
-    res.status(404).send(message);
-    // todosData.foreach((el) => {
-    // if (el.name != null && el.due != null) {
-
-    // fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
-    //   if (!err) {
-    //     const message = "create";
-    //     res.status(201).end();
-    //   }
-    //   // else {
-    //   //   const message = "Unable to post ";
-    //   //   res.send(message);
-    //   // }
-    // });
-    // }
-    // });
   }
+  //  else {
+  //   const message = "id not found";
+  //   res.status(404).send(message);
+  //   // todosData.foreach((el) => {
+  //   // if (el.name != null && el.due != null) {
+
+  //   // fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+  //   //   if (!err) {
+  //   //     const message = "create";
+  //   //     res.status(201).end();
+  //   //   }
+  //   //   // else {
+  //   //   //   const message = "Unable to post ";
+  //   //   //   res.send(message);
+  //   //   // }
+  //   // });
+  //   // }
+  //   // });
+  // }
 });
 
 //Add POST request with path '/todos/:id/complete
