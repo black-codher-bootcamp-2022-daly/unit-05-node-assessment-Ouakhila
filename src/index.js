@@ -154,10 +154,14 @@ app.patch("/todos/:id", (req, res) => {
 
   let foundID = todosData.find((todo) => todo.id == id);
   if (foundID) {
-    if (name) {
-      foundID.name = name;
-    }
-    if (due) foundID.due = due;
+    todosData.push({
+      name,
+      due,
+    });
+    // if (name) {
+    //   foundID.name = name;
+    // }
+    // if (due) foundID.due = due;
     console.log(foundID);
 
     const message = " done";
