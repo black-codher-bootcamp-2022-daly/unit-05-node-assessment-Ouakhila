@@ -146,20 +146,42 @@ app.post("/todos", (req, res) => {
 
 //Add PATCH request with path '/todos/:id
 
-// app.patch("/todos/:id", (req, res) => {
-//   var id = req.params.id;
-//   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-//   let body = req.body;
-//   todosData.find((todo) => todo.id === id);
-//   if (!todosData[id]) {
-//     res.status(404, "The task is not found").send();
-//   } else {
-//     todosData.foreach((el) => {
-//       if (el.name != null && el.due != null) {
-//       }
-//     });
-//   }
-// });
+app.patch("/todos/:id", (req, res) => {
+  const name = req.body.name;
+  const due = req.body.due;
+  var id = req.params.id;
+  let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+
+  let foundID = todosData.find((todo) => todo.id == id);
+  if (foundID) {
+    if (name) {
+      foundID.name = name;
+    }
+    if (due) foundID.due = due;
+    console.log(foundID);
+
+    const message = " done";
+    res.status(201).send(message).end();
+  } else {
+    const message = "id not found";
+    res.status(404).send(message);
+    // todosData.foreach((el) => {
+    // if (el.name != null && el.due != null) {
+
+    // fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+    //   if (!err) {
+    //     const message = "create";
+    //     res.status(201).end();
+    //   }
+    //   // else {
+    //   //   const message = "Unable to post ";
+    //   //   res.send(message);
+    //   // }
+    // });
+    // }
+    // });
+  }
+});
 
 //Add POST request with path '/todos/:id/complete
 // app.post("/todos/:id", (req, res) => {
