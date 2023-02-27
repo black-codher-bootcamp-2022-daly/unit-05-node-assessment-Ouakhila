@@ -154,14 +154,10 @@ app.patch("/todos/:id", (req, res) => {
 
   let foundID = todosData.find((todo) => todo.id == id);
   if (foundID) {
-    todosData.push({
-      name,
-      due,
-    });
-    // if (name) {
-    //   foundID.name = name;
-    // }
-    // if (due) foundID.due = due;
+    if (name) {
+      foundID.name = name;
+    }
+    if (due) foundID.due = due;
     console.log(foundID);
 
     const message = " done";
@@ -169,21 +165,6 @@ app.patch("/todos/:id", (req, res) => {
   } else {
     const message = "id not found";
     res.status(404).send(message);
-    // todosData.foreach((el) => {
-    // if (el.name != null && el.due != null) {
-
-    // fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
-    //   if (!err) {
-    //     const message = "create";
-    //     res.status(201).end();
-    //   }
-    //   // else {
-    //   //   const message = "Unable to post ";
-    //   //   res.send(message);
-    //   // }
-    // });
-    // }
-    // });
   }
 });
 
