@@ -161,7 +161,7 @@ app.patch("/todos/:id", (req, res) => {
     console.log(foundID);
 
     const message = " done";
-    res.status(201).send(message).end();
+    res.status(200).send(message).end();
   } else {
     const message = "id not found";
     res.status(404).send(message);
