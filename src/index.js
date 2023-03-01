@@ -171,6 +171,7 @@ app.patch("/todos/:id", (req, res) => {
 //Add POST request with path '/todos/:id/complete
 app.post("/todos/:id", (req, res) => {
   var id = req.params.id;
+  const completed = req.body.completed;
   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const index = todosData.find((el) => el.id === id);
   console.log(index);
@@ -178,7 +179,11 @@ app.post("/todos/:id", (req, res) => {
     const message = "id not found";
     res.status(404).send(message);
   } else {
-    if (index.completed === true) {
+    if (index) {
+      if (index.completed) index.completed = completed;
+
+      fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
+      // res.json(todosData);
       const message = " completed";
       res.status(200).send(message).end();
     }
