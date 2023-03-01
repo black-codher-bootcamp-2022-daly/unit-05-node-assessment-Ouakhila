@@ -182,7 +182,10 @@ app.post("/todos/:id", (req, res) => {
     if (index) {
       if (index.completed) index.completed = completed;
 
-      fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
+      fs.writeFileSync(
+        __dirname + todoFilePath,
+        JSON.stringify(todosData, null, 2)
+      );
       // res.json(todosData);
       const message = " completed";
       res.status(200).send(message).end();
