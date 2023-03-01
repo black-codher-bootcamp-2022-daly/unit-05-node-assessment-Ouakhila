@@ -153,19 +153,19 @@ app.patch("/todos/:id", (req, res) => {
   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   let foundID = todosData.find((todo) => todo.id == id);
+  console.log(foundID);
   if (foundID) {
     if (name) {
       foundID.name = name;
     }
     if (due) foundID.due = due;
     console.log(foundID);
-
-    const message = " done";
-    res.status(200).send(message).end();
-  } else {
-    const message = "id not found";
-    res.status(404).send(message);
   }
+
+  fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
+  // res.json(todosData);
+  const message = " done";
+  res.status(200).send(message).end();
 });
 
 //Add POST request with path '/todos/:id/complete
