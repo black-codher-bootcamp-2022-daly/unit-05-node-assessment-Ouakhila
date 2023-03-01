@@ -169,13 +169,24 @@ app.patch("/todos/:id", (req, res) => {
 });
 
 //Add POST request with path '/todos/:id/complete
-// app.post("/todos/:id", (req, res) => {
-//   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-//   const index = todosData.findIndex((el) => el.id === id);
+app.post("/todos/:id", (req, res) => {
+  var id = req.params.id;
+  const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const index = todosData.find((el) => el.id === id);
+  console.log(index);
+  if (!index) {
+    const message = "id not found";
+    res.status(404).send(message);
+  } else {
+    if (index.completed == tue) {
+      const message = " completed";
+      res.status(200).send(message).end();
+    }
+  }
 
-//   // var name = req.body;
-//   // var due = req.body;
-// });
+  // var name = req.body;
+  // var due = req.body;
+});
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
