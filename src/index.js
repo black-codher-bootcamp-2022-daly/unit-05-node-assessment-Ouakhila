@@ -181,16 +181,11 @@ app.post("/todos/:id", (req, res) => {
   } else {
     if (index) {
       if (index.completed) index.completed = completed;
-
       fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
-      // res.json(todosData);
       const message = " completed";
-      res.status(200, 2).send(message).end();
+      res.status(200).send(message).end();
     }
   }
-
-  // var name = req.body;
-  // var due = req.body;
 });
 //Add POST request with path '/todos/:id/undo
 
