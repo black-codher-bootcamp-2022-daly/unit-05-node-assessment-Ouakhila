@@ -187,7 +187,7 @@ app.post("/todos/:id", (req, res) => {
         (err) => {
           if (!err) {
             const message = "completed";
-            res.status(200).send(message).end();
+            res.status(200).send("Status: OK");
           } else {
             const message = "Unable to post ";
             res.send(message);
