@@ -168,6 +168,62 @@ app.patch("/todos/:id", (req, res) => {
   }
 });
 
+// app.patch("/todos/:id", (req, res) => {
+//   const name = req.body.name;
+//   const due = req.body.due;
+//   const id = req.params.id;
+//   const updateData = req.body;
+//   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+//   // todosData = JSON.stringify(todosData);
+
+//   let foundID = todosData.find((todo) => todo.id === id);
+//   console.log(foundID);
+
+//   if (foundID) {
+// if (name) {
+//   foundID.name = name;
+// }
+// if (due) foundID.due = due;
+// let updated = todosData.forEach((user) => {
+//   if (user.id === foundID) {
+//     if (name && user.name != null) {
+//       foundID.name = name;
+//     } else if (due && user.due != null) {
+//       foundID.due = due;
+//     }
+//   }
+// });
+// console.log(foundID);
+// todosData = JSON.stringify(todosData);
+// fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
+//   if (!err) {
+//     // const message = "done";
+//     res.status(200).end();
+//   } else {
+//     const message = "Unable to update ";
+//     res.send(message);
+//   }
+// });
+// }
+// catch (error) {
+// else {
+//   const message = "invalid";
+//   res.status(400).end();
+//   if (name) {
+//     foundID.name = name;
+//   }
+//   if (due) foundID.due = due;
+//   console.log(foundID);
+
+//   const message = " done";
+//   res.status(200).send(message).end();
+// } else {
+//   const message = "id not found";
+//   res.status(404).send(message);
+// }
+// }
+// });
+
 //Add POST request with path '/todos/:id/complete
 // app.post("/todos/:id", (req, res) => {
 //   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
