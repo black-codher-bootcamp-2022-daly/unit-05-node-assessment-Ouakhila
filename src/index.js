@@ -175,18 +175,29 @@ app.post("/todos/:id", (req, res) => {
   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const index = todosData.find((el) => el.id === id);
   console.log(index);
-  // if (!index) {
-  //   const message = "id not found";
-  //   res.status(404).send(message);
-  // } else {
-  if (index) {
-    if (index.completed != null) {
-      index.completed = completed;
+  if (!index) {
+    const message = "id not found";
+    res.status(404).send(message);
+  } else {
+    if (index) {
+      if (index.completed != null) {
+        index.completed = true;
+      }
+
+      // todosData.push({ completed });
+      fs.writeFileSync(
+        __dirname + todoFilePath,
+        JSON.stringify(todosData, null, 2),
+        (err) => {
+          if (err) {
+            res.status(404).end();
+          } else {
+            const message = " great";
+            res.status(200).send(message).end();
+          }
+        }
+      );
     }
-    // todosData.push({ completed });
-    fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
-    const message = " great";
-    res.status(200).send(message).end();
   }
 });
 
