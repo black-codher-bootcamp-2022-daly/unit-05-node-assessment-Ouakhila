@@ -181,9 +181,21 @@ app.post("/todos/:id", (req, res) => {
   } else {
     if (index) {
       if (index.completed) index.completed = completed;
-      fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
-      const message = " completed";
-      res.status(200).send(message).end();
+      fs.writeFileSync(
+        __dirname + todoFilePath,
+        JSON.stringify(todosData),
+        (err) => {
+          if (!err) {
+            const message = "completed";
+            res.status(200).send(message).end();
+          } else {
+            const message = "Unable to post ";
+            res.send(message);
+          }
+        }
+      );
+      // const message = " completed";
+      // res.status(200).send(message).end();
     }
   }
 });
