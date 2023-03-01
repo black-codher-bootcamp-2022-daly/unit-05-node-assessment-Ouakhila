@@ -153,29 +153,43 @@ app.patch("/todos/:id", (req, res) => {
   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
 
   let foundID = todosData.find((todo) => todo.id == id);
+  console.log(foundID);
   if (foundID) {
     if (name) {
       foundID.name = name;
     }
     if (due) foundID.due = due;
     console.log(foundID);
+  }
 
-    const message = " done";
+  fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
+  // res.json(todosData);
+  const message = " done";
+  res.status(200).send(message).end();
+});
+//Add POST request with path '/todos/:id/complete
+
+app.post("/todos/:id", (req, res) => {
+  var id = req.params.id;
+  let completed = req.body.completed;
+  let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const index = todosData.find((el) => el.id === id);
+  console.log(index);
+  // if (!index) {
+  //   const message = "id not found";
+  //   res.status(404).send(message);
+  // } else {
+  if (index) {
+    if (index.completed != null) {
+      index.completed = completed;
+    }
+    // todosData.push({ completed });
+    fs.writeFileSync(__dirname + todoFilePath, JSON.stringify(todosData));
+    const message = " great";
     res.status(200).send(message).end();
-  } else {
-    const message = "id not found";
-    res.status(404).send(message);
   }
 });
 
-//Add POST request with path '/todos/:id/complete
-// app.post("/todos/:id", (req, res) => {
-//   const todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
-//   const index = todosData.findIndex((el) => el.id === id);
-
-//   // var name = req.body;
-//   // var due = req.body;
-// });
 //Add POST request with path '/todos/:id/undo
 
 //Add DELETE request with path '/todos/:id
