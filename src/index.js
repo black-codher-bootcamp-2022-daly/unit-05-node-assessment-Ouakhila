@@ -178,7 +178,7 @@ app.post("/todos/:id", (req, res) => {
     const message = "id not found";
     res.status(404).send(message);
   } else {
-    if (index.completed == tue) {
+    if (index.completed === true) {
       const message = " completed";
       res.status(200).send(message).end();
     }
