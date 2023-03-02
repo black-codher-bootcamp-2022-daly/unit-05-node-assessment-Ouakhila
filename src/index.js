@@ -236,7 +236,7 @@ app.delete("/todos/:id", (req, res) => {
   //if (todosData.filter((todo) => todo.id == id).length !== 0) {
   todosData = todosData.filter((todo) => todo.id != id);
   console.log(todosData);
-  if (!index) {
+  if (!todosData) {
     const message = "id not found";
     res.status(404).send(message);
   } else {
