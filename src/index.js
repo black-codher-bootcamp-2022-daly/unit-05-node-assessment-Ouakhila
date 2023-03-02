@@ -175,34 +175,29 @@ app.post("/todos/:id", (req, res) => {
   let todo = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const index = todo.find((el) => el.id == id);
   console.log(index);
-  if (!index) {
-    const message = "id not found";
-    res.status(404).send(message);
-  } else {
-    if (index) {
-      if (completed != null) {
-        index.completed = true;
-      }
-
-      fs.writeFile(
-        __dirname + todoFilePath,
-        JSON.stringify(todo, null, 2),
-        (err) => {
-          if (err) {
-            res.send("try again");
-          } else {
-            const message = " great";
-            res.status(200).send(message).end();
-          }
-        }
-      );
-    }
-  }
-  // else {
+  // if (!index) {
   //   const message = "id not found";
-  //   res.status(404).send(message).end();
-  // }
-  // }
+  //   res.status(404).send(message);
+  // } else {
+  if (index) {
+    index.completed = true;
+
+    fs.writeFile(
+      __dirname + todoFilePath,
+      JSON.stringify(todo, null, 2),
+      (err) => {
+        if (err) {
+          res.send("try again");
+        } else {
+          const message = " great";
+          res.status(200).end();
+        }
+      }
+    );
+  } else {
+    const message = "id not found";
+    res.status(404).send(message).end();
+  }
 });
 
 //Add POST request with path '/todos/:id/undo
