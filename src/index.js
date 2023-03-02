@@ -234,9 +234,10 @@ app.delete("/todos/:id", (req, res) => {
   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   var id = req.params.id;
   //if (todosData.filter((todo) => todo.id == id).length !== 0) {
+  const index = todosData.find((el) => el.id == id);
   todosData = todosData.filter((todo) => todo.id != id);
   console.log(todosData);
-  if (!todosData) {
+  if (!index) {
     const message = "id not found";
     res.status(404).send(message);
   } else {
