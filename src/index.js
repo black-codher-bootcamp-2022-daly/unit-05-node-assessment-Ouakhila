@@ -200,7 +200,34 @@ app.post("/todos/:id/complete", (req, res) => {
 
 //Add POST request with path '/todos/:id/undo
 
-app.post("/todos/:id/undo", (req, res) => {});
+app.post("/todos/:id/undo", (req, res) => {
+  var id = req.params.id;
+  // let completed = req.body.completed;
+  let todo = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  const index = todo.find((el) => el.id == id);
+  console.log(index);
+  if (!index) {
+    const message = "id not found";
+    res.status(404).send(message);
+  } else {
+    if (index) {
+      if (index.completed != null) index.completed = false;
+
+      fs.writeFile(
+        __dirname + todoFilePath,
+        JSON.stringify(todo, null, 2),
+        (err) => {
+          if (err) {
+            res.send("try again");
+          } else {
+            const message = " great";
+            res.status(200).end();
+          }
+        }
+      );
+    }
+  }
+});
 
 //Add DELETE request with path '/todos/:id
 // app.delete("/todos/:id", (req, resp) => {
