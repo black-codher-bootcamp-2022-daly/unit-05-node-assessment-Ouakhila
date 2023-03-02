@@ -230,15 +230,25 @@ app.post("/todos/:id/undo", (req, res) => {
 });
 
 //Add DELETE request with path '/todos/:id
-// app.delete("/todos/:id", (req, resp) => {
-//   const todosData = JSON.parse(fs.readFileSync(_dirname + todoFilePath));
-//   var id = parseInt(req.params.id);
-//   if (todosData.filter((todo) => todo.id == id).length !== 0) {
-//     todosData = todosData.filter((todo) => todo.id !== id);
-//     resp.status(200).send();
-//   } else {
-//     resp.status(404).send();
-//   }
-// });
+app.delete("/todos/:id", (req, res) => {
+  let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
+  var id = req.params.id;
+  //if (todosData.filter((todo) => todo.id == id).length !== 0) {
+  todosData = todosData.filter((todo) => todo.id != id);
+  console.log(todosData);
+  fs.writeFile(
+    __dirname + todoFilePath,
+    JSON.stringify(todosData, null, 2),
+    (err) => {
+      if (err) {
+        res.status(404);
+      } else {
+        const message = "deleted";
+        res.status(200).end();
+      }
+    }
+  );
+  //}
+});
 
 module.exports = app;
