@@ -236,18 +236,24 @@ app.delete("/todos/:id", (req, res) => {
   //if (todosData.filter((todo) => todo.id == id).length !== 0) {
   todosData = todosData.filter((todo) => todo.id != id);
   console.log(todosData);
-  fs.writeFile(
-    __dirname + todoFilePath,
-    JSON.stringify(todosData, null, 2),
-    (err) => {
-      if (err) {
-        res.status(404);
-      } else {
-        const message = "deleted";
-        res.status(200).end();
+  if (!index) {
+    const message = "id not found";
+    res.status(404).send(message);
+  } else {
+    fs.writeFile(
+      __dirname + todoFilePath,
+      JSON.stringify(todosData, null, 2),
+      (err) => {
+        if (err) {
+          res.status(404);
+        } else {
+          const message = "deleted";
+          res.status(200).end();
+        }
       }
-    }
-  );
+    );
+  }
+
   //}
 });
 
