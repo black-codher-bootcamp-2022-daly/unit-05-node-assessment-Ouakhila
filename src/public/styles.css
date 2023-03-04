@@ -1,0 +1,75 @@
+
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+  
+      text-align: center;
+      color: aliceblue;
+      --border: black;
+    }
+  }
+
+  body {
+    color: white;
+    background: darkslategray; 
+    font-size: 100%;
+    line-height: 1.5;
+    display: grid;
+    grid-template-columns: 0fr min(10%) 1fr;
+    
+    margin-left: 13%;
+  }
+  
+  body>* {
+    grid-column: 1;
+  }
+  
+  h1 {
+    font-size: 50px;
+  }
+  
+  h2 {
+    font-size: 40px;
+    margin-top: 5%;
+  }
+
+  @media only screen and (max-width: 720px) {
+    h1 {
+      font-size: 40px;
+    }
+  
+    h2 {
+      font-size: 40px;
+    }
+  
+  }
+
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    padding-left: 300;
+  }
+  
+  td,
+  th {
+    border: 1px solid var(--border);
+    text-align: left;
+    padding: 0.5rem;
+  }
+  
+  th {
+    background: darkgoldenrod;
+    font-weight: bold;
+  }
+
+  
+
+
+  
+ 
+
+ 
+  
+  
+  
