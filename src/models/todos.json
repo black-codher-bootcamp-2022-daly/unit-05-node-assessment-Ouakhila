@@ -4,32 +4,20 @@
     "name": "Learn to use Adobe Photoshop",
     "created": "2021-10-20T18:25:43.511Z",
     "due": "2022-11-23T23:05:03.352Z",
-    "completed": true
+    "completed": false
   },
   {
     "id": "19d539a11189-bb60-u663-8sd4-01507581",
-    "name": "Buy 2 Cartons of Milk",
+    "name": "Buy 6 Cartons of Milk",
     "created": "2021-10-20T18:25:43.511Z",
     "due": "2021-11-23T23:05:03.352Z",
     "completed": true
-  },
-  {
-    "id": "19d539a11189-4a60-3a4c-4434-01507581",
-    "name": "Learn to juggle",
-    "created": "2021-11-23T14:35:01.752Z",
-    "due": "2021-10-20T18:25:43.511Z",
-    "completed": false
   },
   {
     "id": "7895as2s4c-4a60-3a4c-7acc-895as1cc85",
     "name": "Renew Passport",
     "created": "2021-11-23T14:35:01.752Z",
     "due": "2029-02-20T18:25:43.511Z",
-    "completed": false
-  },
-  {
-    "id": "8fcfcc19-517a-4875-9495-0d40cfe0a5b9",
-    "created": "2023-02-25T16:36:03.000Z",
     "completed": false
   },
   {
@@ -45,5 +33,11 @@
     "created": "2023-02-27T11:28:02.036Z",
     "due": "2022-11-20T18:25:43.511Z",
     "completed": false
+  },
+  {
+    "completed": "true"
+  },
+  {
+    "completed": true
   }
 ]
