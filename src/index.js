@@ -20,14 +20,11 @@ app.use("/content", express.static(path.join(__dirname, "public")));
 
 app.get("/", (_, res) => {
   res.sendFile("./public/index.html", { root: __dirname });
-  // res.status(501).end();
 });
 
 app.get("/todos", (_, res) => {
   res.header("Content-Type", "application/json");
   res.sendFile(todoFilePath, { root: __dirname });
-
-  // res.status(501).end();
 });
 
 /// GET todos/:id
@@ -55,10 +52,6 @@ app.get("/todos/overdue", (req, res) => {
   res.header("Content-Type", "application/json");
 
   res.send(JSON.stringify(overdueArray, null, 2));
-
-  // res.header("Content-Type", "application/json");
-  //   fs.readFileSync(path.join(__dirname, "/models/todos.json/overdue"))
-  //   // res.status(501).end();
 });
 
 //Add GET request with path '/todos/completed'
@@ -79,12 +72,6 @@ app.get("/todos/completed", (req, res) => {
   res.header("Content-Type", "application/json");
   console.log(list);
   res.send(JSON.stringify(list, null, 2));
-
-  // res.header("Content-Type", "application/json");
-
-  // fs.readFileSync(path.join(__dirname, "/models/todos.json/completed"));
-
-  //   // res.status(501).end();
 });
 
 app.get("/todos/:id", (req, res) => {
@@ -122,7 +109,7 @@ app.post("/todos", (req, res) => {
     });
     console.log(req.body);
     console.log(todosData);
-    // res.header("Content-Type", "application/json");
+
     todosData = JSON.stringify(todosData, null, 2);
     // console.log(todosData);
     fs.writeFile(__dirname + todoFilePath, todosData, (err) => {
@@ -173,7 +160,7 @@ app.patch("/todos/:id", (req, res) => {
 
 app.post("/todos/:id/complete", (req, res) => {
   var id = req.params.id;
-  // let completed = req.body.completed;
+
   let todo = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   const index = todo.find((el) => el.id == id);
   console.log(index);
@@ -235,7 +222,7 @@ app.post("/todos/:id/undo", (req, res) => {
 app.delete("/todos/:id", (req, res) => {
   let todosData = JSON.parse(fs.readFileSync(__dirname + todoFilePath));
   var id = req.params.id;
-  //if (todosData.filter((todo) => todo.id == id).length !== 0) {
+
   const index = todosData.find((el) => el.id == id);
   todosData = todosData.filter((todo) => todo.id != id);
   console.log(todosData);
@@ -256,8 +243,6 @@ app.delete("/todos/:id", (req, res) => {
       }
     );
   }
-
-  //}
 });
 
 module.exports = app;
